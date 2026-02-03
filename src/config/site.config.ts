@@ -489,7 +489,7 @@ export const siteConfig: SiteConfig = {
     contactInfo: {
       email: 'info@bogazici.ai',
       website: 'www.bogazici.ai',
-      linkedin: 'https://linkedin.com/company/bogaziciai',
+      linkedin: 'https://www.linkedin.com/company/bo%C4%9Fazi%C3%A7i-ai',
       twitter: 'https://twitter.com/bogaziciai',
     },
   },
