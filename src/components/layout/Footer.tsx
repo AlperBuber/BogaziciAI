@@ -34,7 +34,7 @@ export const Footer: React.FC = () => {
             {/* Social Links */}
             <div className="flex gap-2 justify-center md:justify-start">
               <a
-                href="https://www.linkedin.com/company/bo%C4%9Fazi%C3%A7i-ai/?viewAsMember=true"
+                href="https://www.linkedin.com/company/bo%C4%9Fazi%C3%A7i-ai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-blue-600 hover:border-blue-300 transition-all duration-200"
