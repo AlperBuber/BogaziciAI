@@ -1,6 +1,5 @@
 import React from 'react';
 import * as LucideIcons from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 type IconName = keyof typeof LucideIcons;
 
@@ -14,11 +13,11 @@ interface IconProps {
 export const Icon: React.FC<IconProps> = ({
   name,
   size = 24,
-  className,
+  className = '',
   strokeWidth = 2,
 }) => {
   const IconComponent = LucideIcons[name] as React.ComponentType<{
-    size: number;
+    size?: number;
     className?: string;
     strokeWidth?: number;
   }>;
@@ -28,13 +27,7 @@ export const Icon: React.FC<IconProps> = ({
     return null;
   }
 
-  return (
-    <IconComponent
-      size={size}
-      className={cn('shrink-0', className)}
-      strokeWidth={strokeWidth}
-    />
-  );
+  return <IconComponent size={size} className={className} strokeWidth={strokeWidth} />;
 };
 
 export default Icon;

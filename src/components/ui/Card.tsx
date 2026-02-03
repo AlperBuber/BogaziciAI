@@ -1,25 +1,23 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { hoverScale } from '@/lib/motion-variants';
 
 interface CardProps {
   children: React.ReactNode;
-  variant?: 'default' | 'elevated' | 'bordered' | 'gradient';
-  padding?: 'sm' | 'md' | 'lg' | 'none';
+  variant?: 'default' | 'elevated' | 'bordered' | 'gradient' | 'glass';
+  padding?: 'none' | 'sm' | 'md' | 'lg';
   hover?: boolean;
   className?: string;
   onClick?: () => void;
 }
 
-const variants = {
-  default: 'bg-surface',
-  elevated: 'bg-surface shadow-lg',
-  bordered: 'bg-surface border border-border',
-  gradient: 'bg-gradient-to-br from-primary/10 via-accent/10 to-accent-secondary/10',
+const variantClasses = {
+  default: 'bg-white border border-border',
+  elevated: 'bg-white shadow-card',
+  bordered: 'bg-white border-2 border-border',
+  gradient: 'bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20',
+  glass: 'glassmorphism',
 };
 
-const paddings = {
+const paddingClasses = {
   none: '',
   sm: 'p-4',
   md: 'p-6',
@@ -28,35 +26,28 @@ const paddings = {
 
 export const Card: React.FC<CardProps> = ({
   children,
-  variant = 'bordered',
+  variant = 'default',
   padding = 'md',
   hover = true,
-  className,
+  className = '',
   onClick,
 }) => {
-  const cardClasses = cn(
-    'rounded-xl transition-all duration-base',
-    variants[variant],
-    paddings[padding],
-    hover && 'hover:shadow-lg hover:border-primary/30',
-    onClick && 'cursor-pointer',
-    className
-  );
-
-  if (hover) {
-    return (
-      <motion.div
-        whileHover={hoverScale}
-        className={cardClasses}
-        onClick={onClick}
-      >
-        {children}
-      </motion.div>
-    );
-  }
+  const hoverClasses = hover
+    ? 'transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1'
+    : '';
 
   return (
-    <div className={cardClasses} onClick={onClick}>
+    <div
+      className={`
+        rounded-xl
+        ${variantClasses[variant]}
+        ${paddingClasses[padding]}
+        ${hoverClasses}
+        ${onClick ? 'cursor-pointer' : ''}
+        ${className}
+      `.trim()}
+      onClick={onClick}
+    >
       {children}
     </div>
   );

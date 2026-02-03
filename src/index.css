@@ -2,109 +2,139 @@
 @tailwind components;
 @tailwind utilities;
 
-/* === ROOT VARIABLES (LIGHT MODE) === */
+/* ========================================
+   CSS VARIABLES - Design System
+   ======================================== */
 :root {
-  /* PRIMARY COLORS */
-  --color-primary: 217 91% 55%;
-  --color-primary-hover: 217 91% 45%;
+  /* === PRIMARY COLORS (Blue from Logo) === */
+  --color-primary: 217 91% 60%;
+  --color-primary-hover: 217 91% 50%;
   --color-primary-light: 217 91% 95%;
   
-  /* SECONDARY/ACCENT - Blue tones only */
-  --color-accent: 205 85% 50%;
-  --color-accent-2: 195 85% 45%;
+  /* === ACCENT COLORS === */
+  --color-accent: 222 47% 11%;
+  --color-accent-2: 210 40% 96%;
   
-  /* NEUTRAL GRAYS */
+  /* === BACKGROUNDS === */
   --color-background: 0 0% 100%;
   --color-surface: 220 14% 96%;
+  --color-surface-2: 220 14% 98%;
   --color-border: 220 13% 91%;
   
-  /* TEXT HIERARCHY */
+  /* === TEXT HIERARCHY === */
   --color-text-primary: 222 47% 11%;
   --color-text-secondary: 220 9% 46%;
   --color-text-muted: 220 9% 64%;
   --color-text-on-primary: 0 0% 100%;
   
-  /* GRADIENTS - Blue tones only */
-  --gradient-hero: linear-gradient(135deg, hsl(217 91% 55%), hsl(205 85% 50%), hsl(195 85% 45%));
-  --gradient-cta: linear-gradient(90deg, hsl(217 91% 55%), hsl(205 85% 50%));
+  /* === GRADIENTS === */
+  --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(217 91% 45%));
+  --gradient-hero: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(210 100% 50%) 50%, hsl(217 91% 60%) 100%);
+  --gradient-cta: linear-gradient(90deg, hsl(217 91% 55%), hsl(217 91% 65%));
+  --gradient-text: linear-gradient(135deg, hsl(217 91% 50%), hsl(217 91% 70%));
   
-  /* SHADOWS */
+  /* === SHADOWS === */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
   --shadow-glow: 0 0 40px rgb(59 130 246 / 0.3);
   
-  /* SPACING SCALE */
+  /* === SPACING === */
   --space-section: 6rem;
   --space-container: 2rem;
   
-  /* RADIUS */
+  /* === RADIUS === */
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
   --radius-full: 9999px;
   
-  /* TRANSITIONS */
+  /* === TRANSITIONS === */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
   --transition-slow: 350ms ease;
-
-  /* Font */
-  --font-inter: 'Inter', system-ui, sans-serif;
 }
 
-/* === DARK MODE === */
-.dark {
-  --color-background: 222 47% 5%;
-  --color-surface: 222 47% 10%;
-  --color-border: 222 47% 20%;
-  --color-text-primary: 0 0% 98%;
-  --color-text-secondary: 220 9% 70%;
-  --color-text-muted: 220 9% 50%;
+/* ========================================
+   BASE STYLES
+   ======================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* === RESPONSIVE SPACING === */
-@media (max-width: 768px) {
-  :root {
-    --space-container: 1rem;
-    --space-section: 4rem;
-  }
-}
-
-/* === BASE STYLES === */
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background: hsl(var(--color-background));
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: hsl(var(--color-background));
   color: hsl(var(--color-text-primary));
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
   overflow-x: hidden;
+}
+
+/* ScrollSmoother wrapper styles */
+#smooth-wrapper {
+  overflow: hidden;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#smooth-content {
+  overflow: visible;
   width: 100%;
 }
 
-/* === UTILITIES === */
+/* Fallback for no-JS or reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  #smooth-wrapper {
+    position: relative;
+    overflow: visible;
+  }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
 .text-gradient {
-  background: var(--gradient-cta);
+  background: var(--gradient-text);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.bg-gradient-hero {
-  background: var(--gradient-hero);
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.bg-gradient-cta {
-  background: var(--gradient-cta);
+.glassmorphism-dark {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
-/* === CONTAINER === */
+/* ========================================
+   CONTAINER
+   ======================================== */
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -112,264 +142,144 @@ body {
   padding-right: var(--space-container);
 }
 
-/* === GLASSMORPHISM === */
-.glass {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+.container-lg {
+  max-width: 1440px;
 }
 
-.dark .glass {
-  background: rgba(15, 23, 42, 0.8);
+.container-sm {
+  max-width: 960px;
 }
 
-/* === SECTION SPACING === */
+/* ========================================
+   SECTION SPACING
+   ======================================== */
 .section {
   padding-top: var(--space-section);
   padding-bottom: var(--space-section);
 }
 
-/* === BENTO GRID === */
-.bento-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
-
-.bento-item.large {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-
-.bento-item.wide {
-  grid-column: span 2;
-}
-
-@media (max-width: 1024px) {
-  .bento-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .bento-item.large {
-    grid-column: span 2;
-    grid-row: span 1;
+@media (max-width: 768px) {
+  :root {
+    --space-container: 1rem;
+    --space-section: 4rem;
   }
 }
 
-@media (max-width: 640px) {
-  .bento-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .bento-item.large,
-  .bento-item.wide {
-    grid-column: span 1;
-  }
-}
-
-/* === NOISE TEXTURE OVERLAY === */
-.noise-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9998;
-  opacity: 0.025;
-}
-
-.noise-overlay::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  opacity: 1;
-}
-
-/* === PREMIUM GLASSMORPHISM 2.0 === */
-.glass-premium {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid transparent;
-  background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), 
-                    linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.4) 100%);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.04),
-    0 0 1px rgba(255, 255, 255, 0.5) inset;
-}
-
-.dark .glass-premium {
-  background: rgba(15, 23, 42, 0.7);
-  background-image: linear-gradient(rgba(15,23,42,0.7), rgba(15,23,42,0.7)), 
-                    linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.08) 100%);
-}
-
-/* Glowing border card */
-.glow-card {
-  position: relative;
-  background: hsl(var(--color-surface));
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-}
-
-.glow-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  padding: 1px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, 
-    rgba(99, 102, 241, 0.5) 0%, 
-    rgba(139, 92, 246, 0.3) 25%,
-    rgba(59, 130, 246, 0.1) 50%,
-    rgba(139, 92, 246, 0.3) 75%,
-    rgba(99, 102, 241, 0.5) 100%
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-.glow-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: 
-    0 0 40px rgba(99, 102, 241, 0.15),
-    0 0 80px rgba(139, 92, 246, 0.1);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.glow-card:hover::after {
-  opacity: 1;
-}
-
-/* === CLIP PATH HOVER EFFECT === */
-.hover-reveal {
-  position: relative;
-  overflow: hidden;
-}
-
-.hover-reveal::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, hsl(var(--color-primary)), hsl(var(--color-accent)));
-  clip-path: circle(0% at var(--mouse-x, 50%) var(--mouse-y, 50%));
-  transition: clip-path 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.hover-reveal:hover::before {
-  clip-path: circle(150% at var(--mouse-x, 50%) var(--mouse-y, 50%));
-}
-
-/* === TEXT HOVER EFFECTS === */
-.text-hover-slide {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-}
-
-.text-hover-slide span {
-  display: block;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.text-hover-slide::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 100%;
-  left: 0;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.text-hover-slide:hover span {
-  transform: translateY(-100%);
-}
-
-.text-hover-slide:hover::after {
-  transform: translateY(-100%);
-}
-
-/* === ANIMATED GRADIENT BORDER === */
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-.animated-border {
-  position: relative;
-  border-radius: var(--radius-xl);
-}
-
-.animated-border::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  background: conic-gradient(from var(--angle), 
-    hsl(217 91% 60%), 
-    hsl(265 83% 57%), 
-    hsl(160 84% 39%), 
-    hsl(217 91% 60%)
-  );
-  animation: rotate-border 4s linear infinite;
-  z-index: -1;
-}
-
-.animated-border::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: hsl(var(--color-background));
-  z-index: -1;
-}
-
-@keyframes rotate-border {
-  to {
-    --angle: 360deg;
-  }
-}
-
-/* === SMOOTH FOCUS STYLES === */
-:focus-visible {
-  outline: 2px solid hsl(var(--color-primary));
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
-}
-
-/* === SELECTION STYLES === */
-::selection {
-  background: hsl(var(--color-primary) / 0.3);
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
   color: hsl(var(--color-text-primary));
 }
 
-/* === SCROLLBAR STYLES === */
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 600;
+}
+
+p {
+  color: hsl(var(--color-text-secondary));
+}
+
+/* ========================================
+   LINK STYLES
+   ======================================== */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: hsl(var(--color-primary));
+}
+
+/* ========================================
+   BUTTON BASE
+   ======================================== */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* ========================================
+   SELECTION
+   ======================================== */
+::selection {
+  background-color: hsl(var(--color-primary) / 0.2);
+  color: hsl(var(--color-primary));
+}
+
+/* ========================================
+   SCROLLBAR
+   ======================================== */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: hsl(var(--color-surface));
 }
 
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--color-border));
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--color-text-muted));
+}
+
+/* ========================================
+   FOCUS STATES
+   ======================================== */
+:focus-visible {
+  outline: 2px solid hsl(var(--color-primary));
+  outline-offset: 2px;
+}
+
+/* ========================================
+   ANIMATIONS - GSAP will handle most,
+   but these are CSS fallbacks
+   ======================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Reduced motion - disable animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

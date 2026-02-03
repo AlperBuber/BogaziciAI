@@ -1,119 +1,86 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { siteConfig } from '@/config/site.config';
-import { Container, Icon } from '@/components/ui';
-import { FadeInUp } from '@/components/motion';
+import { Check } from 'lucide-react';
+import { FadeInUp, StaggerContainer, StaggerItem } from '../motion';
+import { siteConfig } from '../../config/site.config';
 
 export const AboutSection: React.FC = () => {
-  const { aboutPage } = siteConfig;
+  const { about } = siteConfig;
 
   return (
-    <section id="about" className="section bg-white py-24">
-      <Container>
+    <section id="about" className="section bg-surface">
+      <div className="container">
         {/* Intro */}
         <FadeInUp>
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-              {aboutPage.intro.title}
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+              About <span className="text-gradient">Boğaziçi AI</span>
             </h2>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              {aboutPage.intro.description}
+            <p className="text-lg text-foreground-secondary leading-relaxed">
+              {about.intro}
             </p>
           </div>
         </FadeInUp>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Vision Card */}
-          <FadeInUp delay={0.1}>
-            <motion.div 
-              className="relative bg-gradient-to-br from-gray-50 to-white rounded-2xl p-10 border border-gray-100 shadow-lg h-full overflow-hidden"
-              whileHover={{ y: -4 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            >
-              {/* Decorative element */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-50 to-transparent rounded-bl-full opacity-50" />
-              
-              <div className="relative">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center shadow-sm">
-                    <Icon name="Eye" size={24} className="text-gray-600" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-foreground">
-                    Our Vision
-                  </h3>
+        {/* Vision & Mission Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Vision */}
+          <FadeInUp delay={0.2}>
+            <div className="bg-white rounded-2xl p-8 shadow-card h-full">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
                 </div>
-                
-                <ul className="space-y-5">
-                  {aboutPage.vision.map((item, index) => (
-                    <motion.li
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      className="flex gap-4 items-start"
-                    >
-                      <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center flex-shrink-0 shadow-sm">
-                        <Icon
-                          name={item.icon as keyof typeof import('lucide-react')}
-                          size={18}
-                          className="text-gray-500"
-                        />
-                      </div>
-                      <p className="text-gray-600 leading-relaxed pt-2">{item.text}</p>
-                    </motion.li>
+                <h3 className="text-xl font-bold text-foreground">{about.vision.title}</h3>
+              </div>
+              <StaggerContainer staggerDelay={0.1}>
+                <ul className="space-y-4">
+                  {about.vision.items.map((item, index) => (
+                    <StaggerItem key={index}>
+                      <li className="flex gap-3">
+                        <div className="shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+                          <Check size={12} className="text-primary" />
+                        </div>
+                        <span className="text-foreground-secondary">{item}</span>
+                      </li>
+                    </StaggerItem>
                   ))}
                 </ul>
-              </div>
-            </motion.div>
+              </StaggerContainer>
+            </div>
           </FadeInUp>
 
-          {/* Mission Card */}
-          <FadeInUp delay={0.2}>
-            <motion.div 
-              className="relative bg-gradient-to-br from-gray-50 to-white rounded-2xl p-10 border border-gray-100 shadow-lg h-full overflow-hidden"
-              whileHover={{ y: -4 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            >
-              {/* Decorative element */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-50 to-transparent rounded-bl-full opacity-50" />
-              
-              <div className="relative">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center shadow-sm">
-                    <Icon name="Target" size={24} className="text-gray-600" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-foreground">
-                    Our Mission
-                  </h3>
+          {/* Mission */}
+          <FadeInUp delay={0.3}>
+            <div className="bg-white rounded-2xl p-8 shadow-card h-full">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
                 </div>
-                
-                <ul className="space-y-5">
-                  {aboutPage.mission.map((item, index) => (
-                    <motion.li
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      className="flex gap-4 items-start"
-                    >
-                      <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center flex-shrink-0 shadow-sm">
-                        <Icon
-                          name={item.icon as keyof typeof import('lucide-react')}
-                          size={18}
-                          className="text-gray-500"
-                        />
-                      </div>
-                      <p className="text-gray-600 leading-relaxed pt-2">{item.text}</p>
-                    </motion.li>
+                <h3 className="text-xl font-bold text-foreground">{about.mission.title}</h3>
+              </div>
+              <StaggerContainer staggerDelay={0.1}>
+                <ul className="space-y-4">
+                  {about.mission.items.map((item, index) => (
+                    <StaggerItem key={index}>
+                      <li className="flex gap-3">
+                        <div className="shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+                          <Check size={12} className="text-primary" />
+                        </div>
+                        <span className="text-foreground-secondary">{item}</span>
+                      </li>
+                    </StaggerItem>
                   ))}
                 </ul>
-              </div>
-            </motion.div>
+              </StaggerContainer>
+            </div>
           </FadeInUp>
         </div>
-      </Container>
+      </div>
     </section>
   );
 };

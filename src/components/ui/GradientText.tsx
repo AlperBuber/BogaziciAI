@@ -1,5 +1,4 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
 
 interface GradientTextProps {
   children: React.ReactNode;
@@ -9,16 +8,11 @@ interface GradientTextProps {
 
 export const GradientText: React.FC<GradientTextProps> = ({
   children,
-  className,
+  className = '',
   as: Component = 'span',
 }) => {
   return (
-    <Component
-      className={cn(
-        'text-gradient bg-gradient-cta',
-        className
-      )}
-    >
+    <Component className={`text-gradient ${className}`}>
       {children}
     </Component>
   );
