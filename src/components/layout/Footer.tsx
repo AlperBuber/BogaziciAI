@@ -1,98 +1,109 @@
 import React from 'react';
-import { Linkedin, Twitter, Mail, Globe } from 'lucide-react';
-import { siteConfig } from '../../config/site.config';
+import { Link } from 'react-router-dom';
+import { siteConfig } from '@/config/site.config';
+import { Container } from '@/components/ui';
+import { Linkedin, Mail, Globe } from 'lucide-react';
 
 export const Footer: React.FC = () => {
-  const { footer, metadata, navigation } = siteConfig;
+  const { metadata, contactPage } = siteConfig;
+
+  const quickLinks = [
+    { label: 'About Us', href: '#about' },
+    { label: 'Services', href: '/services' },
+    { label: 'Industries', href: '#industries' },
+    { label: 'Team', href: '#team' },
+  ];
 
   return (
-    <footer className="bg-foreground text-white py-16">
-      <div className="container">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+    <footer className="bg-gray-50 border-t border-gray-200">
+      <Container className="py-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Brand Column */}
-          <div className="lg:col-span-2">
-            <img
-              src={navigation.logo.src}
-              alt={navigation.logo.alt}
-              className="h-10 w-auto mb-4 brightness-0 invert"
-            />
-            <p className="text-white/70 max-w-md mb-6">
-              {footer.description}
+          <div className="md:col-span-5 flex flex-col items-center md:items-start text-center md:text-left">
+            <Link to="/" className="inline-block mb-4">
+              <img
+                src="/images/logo.png"
+                alt={metadata.siteName}
+                className="h-28 w-auto"
+              />
+            </Link>
+            <p className="text-gray-600 text-sm mb-4 max-w-sm leading-relaxed">
+              End-to-end, secure and regulation-ready AI transformation.
             </p>
+            
             {/* Social Links */}
-            <div className="flex gap-4">
+            <div className="flex gap-2 justify-center md:justify-start">
               <a
-                href={metadata.linkedin}
+                href="https://www.linkedin.com/company/bo%C4%9Fazi%C3%A7i-ai/?viewAsMember=true"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors"
-                aria-label="LinkedIn"
+                className="w-9 h-9 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-blue-600 hover:border-blue-300 transition-all duration-200"
               >
-                <Linkedin size={18} />
+                <Linkedin size={16} />
               </a>
               <a
-                href={`https://twitter.com/${metadata.twitter.replace('@', '')}`}
+                href={`mailto:${contactPage.contactInfo.email}`}
+                className="w-9 h-9 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-blue-600 hover:border-blue-300 transition-all duration-200"
+              >
+                <Mail size={16} />
+              </a>
+              <a
+                href={`https://${contactPage.contactInfo.website}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors"
-                aria-label="Twitter"
+                className="w-9 h-9 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-blue-600 hover:border-blue-300 transition-all duration-200"
               >
-                <Twitter size={18} />
-              </a>
-              <a
-                href={`mailto:${metadata.email}`}
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors"
-                aria-label="Email"
-              >
-                <Mail size={18} />
-              </a>
-              <a
-                href={metadata.siteUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors"
-                aria-label="Website"
-              >
-                <Globe size={18} />
+                <Globe size={16} />
               </a>
             </div>
           </div>
 
-          {/* Link Sections */}
-          {footer.sections.map((section) => (
-            <div key={section.title}>
-              <h4 className="font-semibold text-white mb-4">{section.title}</h4>
-              <ul className="space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="text-white/70 hover:text-white transition-colors"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Quick Links */}
+          <div className="md:col-span-3 md:col-start-7 flex flex-col items-center md:items-start text-center md:text-left">
+            <h3 className="font-semibold text-foreground mb-4 text-sm">
+              Quick Links
+            </h3>
+            <ul className="space-y-2">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    to={link.href}
+                    className="text-gray-600 hover:text-foreground transition-colors duration-200 text-sm"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div className="md:col-span-3 flex flex-col items-center md:items-start text-center md:text-left">
+            <h3 className="font-semibold text-foreground mb-4 text-sm">
+              Contact
+            </h3>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li>{contactPage.contactInfo.email}</li>
+              <li>{contactPage.contactInfo.website}</li>
+            </ul>
+          </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-white/50 text-sm">
-            {footer.copyright}
+        <div className="mt-8 pt-6 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-gray-500 text-sm">
+            © 2026 Boğaziçi AI. All rights reserved.
           </p>
-          <div className="flex gap-6 text-sm text-white/50">
-            <a href="#" className="hover:text-white transition-colors">
+          <div className="flex gap-6">
+            <Link to="/privacy" className="text-gray-500 hover:text-foreground text-sm transition-colors">
               Privacy Policy
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
+            </Link>
+            <Link to="/terms" className="text-gray-500 hover:text-foreground text-sm transition-colors">
               Terms of Service
-            </a>
+            </Link>
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 };

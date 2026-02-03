@@ -1,39 +1,24 @@
-import React, { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
-import { Home, Services, Contact } from './pages';
-
-function ScrollToTop() {
-  const { pathname, hash } = useLocation();
-
-  useEffect(() => {
-    // If there's a hash, scroll to the element
-    if (hash) {
-      const element = document.querySelector(hash);
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-    } else {
-      // Otherwise scroll to top
-      window.scrollTo(0, 0);
-    }
-  }, [pathname, hash]);
-
-  return null;
-}
+import { Routes, Route } from 'react-router-dom'
+import { Layout } from '@/components/layout/Layout'
+import { SmoothScrollProvider } from '@/components/providers'
+import HomePage from '@/pages/HomePage'
+import AboutPage from '@/pages/AboutPage'
+import ServicesPage from '@/pages/ServicesPage'
+import ContactPage from '@/pages/ContactPage'
 
 function App() {
   return (
-    <div className="min-h-screen bg-background">
-      <ScrollToTop />
+    <SmoothScrollProvider>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="services" element={<ServicesPage />} />
+          <Route path="contact" element={<ContactPage />} />
+        </Route>
       </Routes>
-    </div>
-  );
+    </SmoothScrollProvider>
+  )
 }
 
-export default App;
+export default App

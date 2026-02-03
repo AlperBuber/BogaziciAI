@@ -1,25 +1,26 @@
 import React from 'react';
+import { cn } from '@/lib/utils';
 import * as LucideIcons from 'lucide-react';
 
 type IconName = keyof typeof LucideIcons;
 
 interface BadgeProps {
   children: React.ReactNode;
-  variant?: 'default' | 'primary' | 'success' | 'warning' | 'info';
+  variant?: 'default' | 'primary' | 'success' | 'warning' | 'accent';
   size?: 'sm' | 'md';
   icon?: IconName;
   className?: string;
 }
 
-const variantClasses = {
+const variants = {
   default: 'bg-surface text-foreground-secondary border border-border',
   primary: 'bg-primary-light text-primary border border-primary/20',
-  success: 'bg-green-50 text-green-700 border border-green-200',
-  warning: 'bg-amber-50 text-amber-700 border border-amber-200',
-  info: 'bg-blue-50 text-blue-700 border border-blue-200',
+  success: 'bg-emerald-50 text-emerald-600 border border-emerald-200',
+  warning: 'bg-amber-50 text-amber-600 border border-amber-200',
+  accent: 'bg-accent/10 text-accent border border-accent/20',
 };
 
-const sizeClasses = {
+const sizes = {
   sm: 'px-2 py-0.5 text-xs',
   md: 'px-3 py-1 text-sm',
 };
@@ -29,19 +30,18 @@ export const Badge: React.FC<BadgeProps> = ({
   variant = 'default',
   size = 'md',
   icon,
-  className = '',
+  className,
 }) => {
-  const IconComponent = icon ? (LucideIcons[icon] as React.ComponentType<{ className?: string; size?: number }>) : null;
+  const IconComponent = icon ? (LucideIcons[icon] as React.ComponentType<{ size: number; className?: string }>) : null;
 
   return (
     <span
-      className={`
-        inline-flex items-center gap-1.5
-        font-medium rounded-full
-        ${variantClasses[variant]}
-        ${sizeClasses[size]}
-        ${className}
-      `.trim()}
+      className={cn(
+        'inline-flex items-center gap-1.5 font-medium rounded-full',
+        variants[variant],
+        sizes[size],
+        className
+      )}
     >
       {IconComponent && <IconComponent size={size === 'sm' ? 12 : 14} />}
       {children}

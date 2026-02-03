@@ -1,9 +1,8 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -24,9 +23,7 @@ export default {
           secondary: 'hsl(var(--color-text-secondary))',
           muted: 'hsl(var(--color-text-muted))',
         },
-      },
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        'on-primary': 'hsl(var(--color-text-on-primary))',
       },
       borderRadius: {
         sm: 'var(--radius-sm)',
@@ -35,9 +32,14 @@ export default {
         xl: 'var(--radius-xl)',
       },
       boxShadow: {
+        sm: 'var(--shadow-sm)',
+        md: 'var(--shadow-md)',
+        lg: 'var(--shadow-lg)',
         glow: 'var(--shadow-glow)',
-        card: '0 4px 20px -2px rgba(0, 0, 0, 0.1)',
-        'card-hover': '0 8px 30px -4px rgba(0, 0, 0, 0.15)',
+      },
+      backgroundImage: {
+        'gradient-hero': 'var(--gradient-hero)',
+        'gradient-cta': 'var(--gradient-cta)',
       },
       spacing: {
         section: 'var(--space-section)',
@@ -48,17 +50,12 @@ export default {
         base: '250ms',
         slow: '350ms',
       },
-      animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-      },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
+      fontFamily: {
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
       },
     },
   },
   plugins: [],
-}
+};
+
+export default config;

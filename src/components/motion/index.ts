@@ -1,3 +1,12 @@
 export { FadeInUp } from './FadeInUp';
 export { StaggerContainer, StaggerItem } from './StaggerContainer';
-export { SplitTextReveal } from './SplitTextReveal';
+export { FloatingElement } from './FloatingElement';
+export { ParallaxWrapper } from './ParallaxWrapper';
+export { RevealText } from './RevealText';
+export { RevealList, RevealListItem } from './RevealList';
+export { RevealImage } from './RevealImage';
+export { MagneticButton } from './MagneticButton';
+export { CustomCursor } from './CustomCursor';
+export { SplitText } from './SplitText';
+export { TiltCard } from './TiltCard';
+export { TextReveal, LineReveal } from './TextReveal';

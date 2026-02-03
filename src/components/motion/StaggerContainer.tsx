@@ -1,72 +1,52 @@
-import React, { useRef } from 'react';
-import { useGSAP } from '@gsap/react';
-import { gsap, prefersReducedMotion } from '../../lib/gsap-config';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { staggerItem } from '@/lib/motion-variants';
 
 interface StaggerContainerProps {
   children: React.ReactNode;
   staggerDelay?: number;
-  duration?: number;
   className?: string;
-  itemSelector?: string;
 }
 
 export const StaggerContainer: React.FC<StaggerContainerProps> = ({
   children,
-  staggerDelay = 0.1,
-  duration = 0.5,
-  className = '',
-  itemSelector = '.stagger-item',
+  staggerDelay = 0.15,
+  className,
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    if (prefersReducedMotion() || !containerRef.current) return;
-
-    const items = containerRef.current.querySelectorAll(itemSelector);
-    if (items.length === 0) return;
-
-    gsap.fromTo(
-      items,
-      {
-        opacity: 0,
-        y: 30,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration,
-        stagger: staggerDelay,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
-  }, { scope: containerRef });
-
   return (
-    <div ref={containerRef} className={className}>
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-50px' }}
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: {
+            staggerChildren: staggerDelay,
+          },
+        },
+      }}
+      className={className}
+    >
       {children}
-    </div>
+    </motion.div>
   );
 };
 
-// Helper component to wrap stagger items
-export const StaggerItem: React.FC<{ children: React.ReactNode; className?: string }> = ({
+interface StaggerItemProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export const StaggerItem: React.FC<StaggerItemProps> = ({
   children,
-  className = '',
+  className,
 }) => {
-  const shouldReduceMotion = prefersReducedMotion();
-  
   return (
-    <div 
-      className={`stagger-item ${className}`} 
-      style={shouldReduceMotion ? {} : { opacity: 0 }}
-    >
+    <motion.div variants={staggerItem} className={className}>
       {children}
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,102 +1,117 @@
 import React from 'react';
-import { Button, Card, Icon } from '../ui';
-import { FadeInUp, SplitTextReveal, StaggerContainer, StaggerItem } from '../motion';
-import { siteConfig } from '../../config/site.config';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { siteConfig } from '@/config/site.config';
+import { Container, Button, Badge } from '@/components/ui';
+import { SplitText, MagneticButton, TextReveal } from '@/components/motion';
 
 export const HeroSection: React.FC = () => {
-  const { hero, pillars } = siteConfig;
+  const { hero } = siteConfig.homePage;
+  const { scrollY } = useScroll();
+
+  // Parallax effects
+  const textY = useTransform(scrollY, [0, 500], [0, 50]);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
   return (
     <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
-      {/* Background decorations */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-20 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/3 rounded-full blur-3xl" />
+      {/* Light Blue Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-blue-50 via-blue-50/50 to-white" />
+
+      {/* Subtle Glass overlay */}
+      <div className="absolute inset-0 bg-white/30" />
+
+      {/* Animated Grid Pattern */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `linear-gradient(rgba(59,130,246,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.3) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px',
+          }}
+        />
       </div>
 
-      <div className="container">
-        {/* Hero Content */}
-        <div className="max-w-4xl mx-auto text-center mb-16">
-          <SplitTextReveal 
-            as="h1" 
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground mb-6 leading-tight"
-            delay={0.2}
-            stagger={0.03}
-          >
-            {hero.headline}
-          </SplitTextReveal>
+      {/* Decorative Blobs - Blue tones only */}
+      <motion.div
+        className="absolute top-1/4 left-10 w-48 h-48 md:w-72 md:h-72 bg-primary/10 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.1, 0.2, 0.1],
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        className="absolute bottom-1/4 right-10 w-64 h-64 md:w-96 md:h-96 bg-accent/10 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.1, 0.15, 0.1],
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+      />
 
-          <FadeInUp delay={0.6}>
-            <p className="text-lg md:text-xl text-foreground-secondary max-w-2xl mx-auto mb-8">
-              {hero.subtext}
-            </p>
-          </FadeInUp>
+      <Container className="relative z-10">
+        <motion.div
+          className="max-w-4xl mx-auto text-center"
+          style={{ opacity }}
+        >
+          <motion.div style={{ y: textY }}>
+            {hero.badge && (
+              <TextReveal delay={0} duration={0.8}>
+                <Badge variant="primary" className="mb-6">
+                  <motion.span
+                    animate={{ opacity: [1, 0.6, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="mr-2"
+                  >
+                    🧠
+                  </motion.span>
+                  {hero.badge.text}
+                </Badge>
+              </TextReveal>
+            )}
 
-          <FadeInUp delay={0.8}>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                href={hero.primaryCTA.href} 
-                size="lg" 
-                icon="ArrowRight"
-              >
-                {hero.primaryCTA.label}
-              </Button>
-              <Button 
-                href={hero.secondaryCTA.href} 
-                variant="secondary" 
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground leading-tight tracking-tight mb-8">
+              End‑to‑end, secure and{' '}
+              <span className="text-primary">regulation‑ready</span> AI transformation.
+            </h1>
+
+            <TextReveal delay={0.8} duration={1}>
+              <p className="text-lg sm:text-xl text-foreground-secondary mb-8 max-w-2xl mx-auto leading-relaxed">
+                {hero.description}
+              </p>
+            </TextReveal>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+            >
+              <Button
+                href={hero.primaryCTA.href}
+                variant="primary"
                 size="lg"
-                icon="ChevronDown"
+                icon="ArrowRight"
+                className="relative overflow-hidden group"
               >
-                {hero.secondaryCTA.label}
+                <span className="relative z-10">{hero.primaryCTA.label}</span>
               </Button>
-            </div>
-          </FadeInUp>
-        </div>
 
-        {/* Trust Strip / Stats */}
-        <FadeInUp delay={1} className="mb-20">
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16">
-            {hero.stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-foreground-secondary">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </FadeInUp>
+              {hero.secondaryCTA && (
+                <Button
+                  href={hero.secondaryCTA.href}
+                  variant="secondary"
+                  size="lg"
+                  icon="ArrowDown"
+                >
+                  {hero.secondaryCTA.label}
+                </Button>
+              )}
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </Container>
 
-        {/* Three Pillars */}
-        <StaggerContainer staggerDelay={0.15} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {pillars.map((pillar) => (
-            <StaggerItem key={pillar.id}>
-              <Card 
-                variant="elevated" 
-                padding="lg" 
-                className="h-full text-center group cursor-pointer"
-              >
-                <div className={`
-                  w-16 h-16 mx-auto mb-6 rounded-2xl flex items-center justify-center
-                  bg-primary/10 text-primary
-                  group-hover:bg-primary group-hover:text-white
-                  transition-all duration-300
-                `}>
-                  <Icon name={pillar.icon as any} size={28} />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-3">
-                  {pillar.title}
-                </h3>
-                <p className="text-foreground-secondary text-sm">
-                  {pillar.description}
-                </p>
-              </Card>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      </div>
     </section>
   );
 };
