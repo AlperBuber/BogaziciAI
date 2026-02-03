@@ -10,7 +10,7 @@ export const siteConfig = {
     siteUrl: 'https://www.bogazici.ai',
     description: 'End-to-end, secure and regulation-ready AI transformation for institutions and enterprises.',
     email: 'info@bogazici.ai',
-    linkedin: 'https://linkedin.com/company/bogaziciai',
+    linkedin: 'https://www.linkedin.com/company/bo%C4%9Fazi%C3%A7i-ai/',
     twitter: '@bogaziciai',
   },
 
