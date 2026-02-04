@@ -466,6 +466,7 @@ export const siteConfig: SiteConfig = {
       name: 'Mehmet Dolgan',
       role: 'Founder & Managing Partner',
       bio: 'AI strategist and digital transformation leader with extensive experience advising global enterprises on responsible AI adoption.',
+      image: '/images/mehmet-dolgan.jpg',
       linkedin: 'https://www.linkedin.com/in/mehmet-dolgan-1a563b2/',
     },
     {
@@ -473,6 +474,7 @@ export const siteConfig: SiteConfig = {
       name: 'Hakan Özkara',
       role: 'Cofounder & Managing Partner',
       bio: 'Experienced leader driving AI innovation and strategic partnerships in enterprise technology.',
+      image: '/images/hakan-ozkara.jpg',
       linkedin: 'https://www.linkedin.com/in/hakan-ozkara/',
     },
   ],

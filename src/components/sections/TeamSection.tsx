@@ -40,13 +40,28 @@ export const TeamSection: React.FC = () => {
                   whileHover={{ y: -4 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
-                  {/* Grey background section with avatar - enlarged for future photos */}
-                  <div className="bg-gray-100 py-20 flex justify-center items-center min-h-[240px]">
-                    <div className="w-32 h-32 rounded-full bg-gray-300 flex items-center justify-center shadow-sm">
-                      <span className="text-3xl font-semibold text-gray-600">
-                        {getInitials(member.name)}
-                      </span>
-                    </div>
+                  {/* Image section with avatar */}
+                  <div className="pt-20 pb-10 flex justify-center items-center min-h-[360px] relative">
+                    {member.image ? (
+                      <div className="w-80 h-80 rounded-2xl overflow-hidden shadow-md border-4 border-white">
+                        <img 
+                          src={member.image} 
+                          alt={member.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-32 h-32 rounded-full bg-gray-300 flex items-center justify-center shadow-sm">
+                        <span className="text-3xl font-semibold text-gray-600">
+                          {getInitials(member.name)}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Separator Line */}
+                  <div className="w-full px-12">
+                    <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
                   </div>
 
                   {/* Content section */}
