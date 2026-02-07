@@ -35,6 +35,14 @@
     <meta name="robots" content="index, follow" />
   </head>
   <body>
+    <!-- Netlify Forms için statik form tanımı (SPA desteği) -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="fullName" />
+      <input type="email" name="email" />
+      <input type="text" name="org" />
+      <textarea name="message"></textarea>
+    </form>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

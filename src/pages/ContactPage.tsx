@@ -1,29 +1,79 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { siteConfig } from '@/config/site.config';
 import { Container, Card, Button } from '@/components/ui';
 import { FadeInUp } from '@/components/motion';
 import { Mail, Globe, Linkedin, Twitter, CheckCircle } from 'lucide-react';
 
+// Form alanları için tip tanımı
+interface FormState {
+  fullName: string;
+  email: string;
+  org: string;
+  message: string;
+}
+
+// Form verilerini URL-encoded formatına çeviren yardımcı fonksiyon
+const encode = (data: Record<string, string>): string => {
+  return Object.keys(data)
+    .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+    .join('&');
+};
+
 export default function ContactPage() {
   const { contactPage } = siteConfig;
-  const [formState, setFormState] = useState({
-    name: '',
+  const [formState, setFormState] = useState<FormState>({
+    fullName: '',
     email: '',
-    organization: '',
+    org: '',
     message: '',
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Başarı mesajını 5 saniye sonra gizle
+  useEffect(() => {
+    if (isSubmitted) {
+      const timer = setTimeout(() => {
+        setIsSubmitted(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSubmitted]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encode({
+          'form-name': 'contact',
+          ...formState,
+        }),
+      });
 
-    setIsLoading(false);
-    setIsSubmitted(true);
+      if (response.ok) {
+        setIsSubmitted(true);
+        // Formu temizle
+        setFormState({
+          fullName: '',
+          email: '',
+          org: '',
+          message: '',
+        });
+      } else {
+        throw new Error('Form gönderilemedi');
+      }
+    } catch (err) {
+      setError('Bir hata oluştu. Lütfen tekrar deneyin.');
+      console.error('Form submission error:', err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (
@@ -163,20 +213,42 @@ export default function ContactPage() {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form
+                    name="contact"
+                    method="POST"
+                    data-netlify="true"
+                    netlify-honeypot="bot-field"
+                    onSubmit={handleSubmit}
+                    className="space-y-6"
+                  >
+                    {/* Netlify için gizli alanlar */}
+                    <input type="hidden" name="form-name" value="contact" />
+                    <p className="hidden">
+                      <label>
+                        Bot alanı: <input name="bot-field" />
+                      </label>
+                    </p>
+
+                    {/* Hata mesajı */}
+                    {error && (
+                      <div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+                        {error}
+                      </div>
+                    )}
+
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
                         <label
-                          htmlFor="name"
+                          htmlFor="fullName"
                           className="block text-sm font-medium text-foreground mb-2"
                         >
                           Full Name
                         </label>
                         <input
                           type="text"
-                          id="name"
-                          name="name"
-                          value={formState.name}
+                          id="fullName"
+                          name="fullName"
+                          value={formState.fullName}
                           onChange={handleChange}
                           required
                           className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors hover:border-primary/50"
@@ -205,16 +277,16 @@ export default function ContactPage() {
 
                     <div>
                       <label
-                        htmlFor="organization"
+                        htmlFor="org"
                         className="block text-sm font-medium text-foreground mb-2"
                       >
                         Organization
                       </label>
                       <input
                         type="text"
-                        id="organization"
-                        name="organization"
-                        value={formState.organization}
+                        id="org"
+                        name="org"
+                        value={formState.org}
                         onChange={handleChange}
                         className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors hover:border-primary/50"
                         placeholder="Your organization"
