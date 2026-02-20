@@ -30,16 +30,15 @@ export const TeamSection: React.FC = () => {
           </div>
         </FadeInUp>
 
-        {/* Centered grid for 2 cards side by side */}
-        <div className="flex justify-center">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full">
-            {team.map((member, index) => (
-              <FadeInUp key={member.id} delay={index * 0.1}>
-                <motion.div
-                  className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 h-full flex flex-col"
-                  whileHover={{ y: -4 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                >
+        {/* 3-column grid for all team members */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {team.map((member, index) => (
+            <FadeInUp key={member.id} delay={index * 0.1}>
+              <motion.div
+                className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 h-full flex flex-col"
+                whileHover={{ y: -4 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              >
                   {/* Image section with avatar */}
                   <div className="pt-20 pb-10 flex justify-center items-center min-h-[360px] relative">
                     {member.image ? (
@@ -96,7 +95,6 @@ export const TeamSection: React.FC = () => {
                 </motion.div>
               </FadeInUp>
             ))}
-          </div>
         </div>
       </Container>
     </section>

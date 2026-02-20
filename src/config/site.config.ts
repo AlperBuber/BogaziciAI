@@ -477,6 +477,14 @@ export const siteConfig: SiteConfig = {
       image: '/images/hakan-ozkara.jpg',
       linkedin: 'https://www.linkedin.com/in/hakan-ozkara/',
     },
+    {
+      id: 'nihan',
+      name: 'Nihan Kul',
+      role: 'Legal Advisor',
+      bio: 'Legal professional specializing in venture capital investments, fund structuring, and transaction management. Advises on regulatory compliance with a focus on blockchain, AI, and crypto-assets.',
+      image: '/images/Nihan_Kul (1).png',
+      linkedin: 'https://www.linkedin.com/in/nihan-kul-/',
+    },
   ],
 
   contactPage: {
